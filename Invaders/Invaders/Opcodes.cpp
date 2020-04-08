@@ -53,7 +53,7 @@ void OpcodeHelper::InitializeOpcodes()
 #define DEFINE_HANDLER(opcode, dataFlag, callback) AddOpcodeHandler(opcode, #opcode, dataFlag, callback)
 
     //0
-    DEFINE_HANDLER(Opcode::NOP, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::NOP, InstructionDataFlag::def, &CPU8080::NOP);
     DEFINE_HANDLER(Opcode::LXI_B, InstructionDataFlag::d16, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::STAX_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::INX_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
@@ -61,7 +61,7 @@ void OpcodeHelper::InitializeOpcodes()
     DEFINE_HANDLER(Opcode::DCR_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::MVI_B, InstructionDataFlag::d8, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::RLC, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::NOP2, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::NOP2, InstructionDataFlag::def, &CPU8080::NOP);
     DEFINE_HANDLER(Opcode::DAD_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::LDAX_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::DCX_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
@@ -70,7 +70,7 @@ void OpcodeHelper::InitializeOpcodes()
     DEFINE_HANDLER(Opcode::MVI_C, InstructionDataFlag::d8, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::RRC, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     //1
-    DEFINE_HANDLER(Opcode::NOP3, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::NOP3, InstructionDataFlag::def, &CPU8080::NOP);
     DEFINE_HANDLER(Opcode::LXI_D, InstructionDataFlag::d16, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::STAX_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::INX_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
@@ -78,7 +78,7 @@ void OpcodeHelper::InitializeOpcodes()
     DEFINE_HANDLER(Opcode::DCR_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::MVI_D, InstructionDataFlag::d8, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::RAL, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::NOP4, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::NOP4, InstructionDataFlag::def, &CPU8080::NOP);
     DEFINE_HANDLER(Opcode::DAD_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::LDAX_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::DCX_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
@@ -87,7 +87,7 @@ void OpcodeHelper::InitializeOpcodes()
     DEFINE_HANDLER(Opcode::MVI_E, InstructionDataFlag::d8, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::RAR, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     //2
-    DEFINE_HANDLER(Opcode::NOP5, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::NOP5, InstructionDataFlag::def, &CPU8080::NOP);
     DEFINE_HANDLER(Opcode::LXI_H, InstructionDataFlag::d16, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::SHLD, InstructionDataFlag::a16, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::INX_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
@@ -95,7 +95,7 @@ void OpcodeHelper::InitializeOpcodes()
     DEFINE_HANDLER(Opcode::DCR_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::MVI_H, InstructionDataFlag::d8, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::DAA, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::NOP6, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::NOP6, InstructionDataFlag::def, &CPU8080::NOP);
     DEFINE_HANDLER(Opcode::DAD_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::LHLD, InstructionDataFlag::a16, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::DCX_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
@@ -104,7 +104,7 @@ void OpcodeHelper::InitializeOpcodes()
     DEFINE_HANDLER(Opcode::MVI_L, InstructionDataFlag::d8, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::CMA, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     //3
-    DEFINE_HANDLER(Opcode::NOP7, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::NOP7, InstructionDataFlag::def, &CPU8080::NOP);
     DEFINE_HANDLER(Opcode::LXI_SP, InstructionDataFlag::d16, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::STA, InstructionDataFlag::a16, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::INX_SP, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
@@ -112,7 +112,7 @@ void OpcodeHelper::InitializeOpcodes()
     DEFINE_HANDLER(Opcode::DCR_M, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::MVI_M, InstructionDataFlag::d8, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::STC, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::NOP8, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::NOP8, InstructionDataFlag::def, &CPU8080::NOP);
     DEFINE_HANDLER(Opcode::DAD_SP, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::LDA, InstructionDataFlag::a16, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::DCX_SP, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
@@ -121,73 +121,73 @@ void OpcodeHelper::InitializeOpcodes()
     DEFINE_HANDLER(Opcode::MVI_A, InstructionDataFlag::d8, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::CMC, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     //4
-    DEFINE_HANDLER(Opcode::MOV_B_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_B_C, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_B_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_B_E, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_B_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_B_L, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_B_M, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_B_A, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_C_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_C_C, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_C_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_C_E, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_C_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_C_L, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_C_M, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_C_A, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::MOV_B_B, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_B_C, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_B_D, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_B_E, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_B_H, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_B_L, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_B_M, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_B_A, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_C_B, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_C_C, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_C_D, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_C_E, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_C_H, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_C_L, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_C_M, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_C_A, InstructionDataFlag::def, &CPU8080::MOV);
     //5
-    DEFINE_HANDLER(Opcode::MOV_D_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_D_C, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_D_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_D_E, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_D_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_D_L, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_D_M, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_D_A, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_E_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_E_C, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_E_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_E_E, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_E_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_E_L, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_E_M, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_E_A, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::MOV_D_B, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_D_C, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_D_D, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_D_E, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_D_H, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_D_L, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_D_M, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_D_A, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_E_B, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_E_C, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_E_D, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_E_E, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_E_H, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_E_L, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_E_M, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_E_A, InstructionDataFlag::def, &CPU8080::MOV);
     //6
-    DEFINE_HANDLER(Opcode::MOV_H_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_H_C, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_H_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_H_E, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_H_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_H_L, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_H_M, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_H_A, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_L_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_L_C, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_L_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_L_E, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_L_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_L_L, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_L_M, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_L_A, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::MOV_H_B, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_H_C, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_H_D, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_H_E, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_H_H, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_H_L, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_H_M, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_H_A, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_L_B, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_L_C, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_L_D, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_L_E, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_L_H, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_L_L, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_L_M, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_L_A, InstructionDataFlag::def, &CPU8080::MOV);
     //7
-    DEFINE_HANDLER(Opcode::MOV_M_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_M_C, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_M_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_M_E, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_M_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_M_L, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::MOV_M_B, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_M_C, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_M_D, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_M_E, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_M_H, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_M_L, InstructionDataFlag::def, &CPU8080::MOV);
     DEFINE_HANDLER(Opcode::HLT, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_M_A, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_A_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_A_C, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_A_D, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_A_E, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_A_H, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_A_L, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_A_M, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
-    DEFINE_HANDLER(Opcode::MOV_A_A, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
+    DEFINE_HANDLER(Opcode::MOV_M_A, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_A_B, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_A_C, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_A_D, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_A_E, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_A_H, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_A_L, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_A_M, InstructionDataFlag::def, &CPU8080::MOV);
+    DEFINE_HANDLER(Opcode::MOV_A_A, InstructionDataFlag::def, &CPU8080::MOV);
     //8
     DEFINE_HANDLER(Opcode::ADD_B, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);
     DEFINE_HANDLER(Opcode::ADD_C, InstructionDataFlag::def, &CPU8080::NotImplementedHandler);

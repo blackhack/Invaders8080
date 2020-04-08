@@ -49,6 +49,16 @@ void Ram::ClearRam()
     std::fill(_memory, _memory + MEMORY_SIZE, 0);
 }
 
+void Ram::Write(uint16_t address, uint8_t data)
+{
+    _memory[address] = data;
+}
+
+uint8_t Ram::Read(uint16_t address)
+{
+    return _memory[address];
+}
+
 std::vector<uint8_t> Ram::GetRamCopy()
 {
     std::vector<uint8_t> ramCopy(_memory, _memory + MEMORY_SIZE);

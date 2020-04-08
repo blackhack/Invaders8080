@@ -292,7 +292,8 @@ enum class InstructionDataFlag
     d16 = 5 // PC += 3
 };
 
-typedef std::function<void(CPU8080*)> OpcodeCallback;
+struct OpcodeHandler;
+typedef std::function<void(CPU8080*, OpcodeHandler*)> OpcodeCallback;
 
 struct OpcodeHandler
 {
