@@ -303,7 +303,7 @@ struct OpcodeHandler
     Opcode opcode;
     std::string name;
     InstructionDataFlag dataFlag;
-    std::size_t length;
+    uint16_t length;
     OpcodeCallback callback;
 };
 

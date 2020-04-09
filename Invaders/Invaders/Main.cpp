@@ -9,9 +9,15 @@ int main()
     Disassembler disassembler;
     CPU8080 cpu(&ram);
 
-    ram.LoadRom("../../Roms/cpu_tests/TST8080.COM");
-    cpu.Execute();
+    ram.LoadRom("../../Roms/testrom");
     disassembler.Disassemble(ram.GetRamCopy().data(), ram.GetProgramSize());
+
+    while (true)
+    {
+        cpu.PrintDebug();
+        system("PAUSE");
+        cpu.Execute();
+    }
 
     return 0;
 }

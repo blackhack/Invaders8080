@@ -12,12 +12,15 @@ public:
     ~CPU8080();
 
     void Execute();
+    void PrintDebug();
     void StackPush(uint16_t value);
     uint16_t StackPop();
 
 public:
     void NotImplementedHandler(OpcodeHandler* opcode_handler);
     void NOP(OpcodeHandler* opcode_handler);
+    void LXI(OpcodeHandler* opcode_handler);
+    void MVI(OpcodeHandler* opcode_handler);
     void MOV(OpcodeHandler* opcode_handler);
 private:
     Ram* _ram;
