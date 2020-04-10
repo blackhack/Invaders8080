@@ -48,6 +48,8 @@ void CPU8080::PrintDebug()
     std::cout << "  _reg_L: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_reg_L) << std::endl;
     std::cout << "  _reg_M: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(*_reg_M) << std::endl;
     std::cout << "  _reg_A: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_reg_A) << std::endl;
+    std::cout << "  MemAt: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_ram->Read(0x010a)) << std::endl;
+    std::cout << "  MemAt: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_ram->Read(0x010b)) << std::endl;
     std::cout << "------Debug information end------\n";
 }
 
@@ -101,6 +103,86 @@ void CPU8080::LXI(OpcodeHandler* opcode_handler)
             _stack_pointer |= (uint16_t)_ram->Read(_pc + 1) << 8;
             break;
     }
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::STAX(OpcodeHandler* opcode_handler)
+{
+    uint16_t address = 0x0000;
+    if (opcode_handler->opcode == Opcode::STAX_B)
+    {
+        address = (uint16_t)_reg_B << 8;
+        address |= _reg_C;
+    }
+    else
+    {
+        address = (uint16_t)_reg_D << 8;
+        address |= _reg_E;
+    }
+
+    _ram->Write(address, _reg_A);
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::SHLD(OpcodeHandler* opcode_handler)
+{
+    uint16_t address = _ram->Read(_pc + 1);
+    address |= (uint16_t)_ram->Read(_pc + 2) << 8;
+
+    _ram->Write(address, _reg_L);
+    _ram->Write(address + 1, _reg_H);
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::STA(OpcodeHandler* opcode_handler)
+{
+    uint16_t address = _ram->Read(_pc + 1);
+    address |= (uint16_t)_ram->Read(_pc + 2) << 8;
+
+    _ram->Write(address, _reg_A);
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::LDAX(OpcodeHandler* opcode_handler)
+{
+    uint16_t address = 0x0000;
+    if (opcode_handler->opcode == Opcode::LDAX_B)
+    {
+        address = (uint16_t)_reg_B << 8;
+        address |= _reg_C;
+    }
+    else
+    {
+        address = (uint16_t)_reg_D << 8;
+        address |= _reg_E;
+    }
+
+    _reg_A = _ram->Read(address);
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::LHLD(OpcodeHandler* opcode_handler)
+{
+    uint16_t address = _ram->Read(_pc + 1);
+    address |= (uint16_t)_ram->Read(_pc + 2) << 8;
+
+    _reg_L = _ram->Read(address);
+    _reg_H = _ram->Read(address + 1);
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::LDA(OpcodeHandler* opcode_handler)
+{
+    uint16_t address = _ram->Read(_pc + 1);
+    address |= (uint16_t)_ram->Read(_pc + 2) << 8;
+
+    _reg_A = _ram->Read(address);
 
     _pc += opcode_handler->length;
 }

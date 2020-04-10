@@ -20,6 +20,12 @@ public:
     void NotImplementedHandler(OpcodeHandler* opcode_handler);
     void NOP(OpcodeHandler* opcode_handler);
     void LXI(OpcodeHandler* opcode_handler);
+    void STAX(OpcodeHandler* opcode_handler);
+    void SHLD(OpcodeHandler* opcode_handler);
+    void STA(OpcodeHandler* opcode_handler);
+    void LDAX(OpcodeHandler* opcode_handler);
+    void LHLD(OpcodeHandler* opcode_handler);
+    void LDA(OpcodeHandler* opcode_handler);
     void MVI(OpcodeHandler* opcode_handler);
     void MOV(OpcodeHandler* opcode_handler);
 private:
