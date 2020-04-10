@@ -6,6 +6,7 @@ CPU8080::CPU8080(Ram* ram) : _ram(ram)
 {
     _pc = 0;
     _stack_pointer = 0;
+
     _reg_B = 0;
     _reg_C = 0;
     _reg_D = 0;
@@ -13,6 +14,12 @@ CPU8080::CPU8080(Ram* ram) : _ram(ram)
     _reg_H = 0;
     _reg_L = 0;
     _reg_A = 0;
+
+    _carry_flag = 0;
+    _aux_carry_flag = 0;
+    _sign_flag = 0;
+    _zero_flag = 0;
+    _parity_flag = 0;
 }
 
 CPU8080::~CPU8080()
@@ -48,8 +55,13 @@ void CPU8080::PrintDebug()
     std::cout << "  _reg_L: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_reg_L) << std::endl;
     std::cout << "  _reg_M: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(*_reg_M) << std::endl;
     std::cout << "  _reg_A: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_reg_A) << std::endl;
-    std::cout << "  MemAt: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_ram->Read(0x010a)) << std::endl;
-    std::cout << "  MemAt: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_ram->Read(0x010b)) << std::endl;
+    std::cout << "  _carry_flag: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_carry_flag) << std::endl;
+    std::cout << "  _aux_carry_flag: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_aux_carry_flag) << std::endl;
+    std::cout << "  _sign_flag: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_sign_flag) << std::endl;
+    std::cout << "  _zero_flag: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_zero_flag) << std::endl;
+    std::cout << "  _parity_flag: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_parity_flag) << std::endl;
+    //std::cout << "  MemAt: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_ram->Read(0x010a)) << std::endl;
+    //std::cout << "  MemAt: " << "0x" << std::setfill('0') << std::setw(4) << std::right << std::hex << static_cast<uint32_t>(_ram->Read(0x010b)) << std::endl;
     std::cout << "------Debug information end------\n";
 }
 
@@ -147,6 +159,44 @@ void CPU8080::STA(OpcodeHandler* opcode_handler)
     _pc += opcode_handler->length;
 }
 
+void CPU8080::INX(OpcodeHandler* opcode_handler)
+{
+    uint8_t* reg_high = nullptr;
+    uint8_t* reg_low = nullptr;
+
+    switch (opcode_handler->opcode)
+    {
+        case Opcode::INX_B:
+            reg_high = &_reg_B;
+            reg_low = &_reg_C;
+            break;
+        case Opcode::INX_D:
+            reg_high = &_reg_D;
+            reg_low = &_reg_E;
+            break;
+        case Opcode::INX_H:
+            reg_high = &_reg_H;
+            reg_low = &_reg_L;
+            break;
+        case Opcode::INX_SP:
+            ++_stack_pointer;
+            break;
+    }
+
+    if (reg_low && reg_high)
+    {
+        uint16_t value = *reg_low;
+        value |= (uint16_t)(*reg_high) << 8;
+
+        ++value;
+
+        *reg_low = value & 0x00FF;
+        *reg_high = (value & 0xFF00) >> 8;
+    }
+
+    _pc += opcode_handler->length;
+}
+
 void CPU8080::LDAX(OpcodeHandler* opcode_handler)
 {
     uint16_t address = 0x0000;
@@ -187,6 +237,44 @@ void CPU8080::LDA(OpcodeHandler* opcode_handler)
     _pc += opcode_handler->length;
 }
 
+void CPU8080::DCX(OpcodeHandler* opcode_handler)
+{
+    uint8_t* reg_high = nullptr;
+    uint8_t* reg_low = nullptr;
+
+    switch (opcode_handler->opcode)
+    {
+        case Opcode::DCX_B:
+            reg_high = &_reg_B;
+            reg_low = &_reg_C;
+            break;
+        case Opcode::DCX_D:
+            reg_high = &_reg_D;
+            reg_low = &_reg_E;
+            break;
+        case Opcode::DCX_H:
+            reg_high = &_reg_H;
+            reg_low = &_reg_L;
+            break;
+        case Opcode::DCX_SP:
+            --_stack_pointer;
+            break;
+    }
+
+    if (reg_low && reg_high)
+    {
+        uint16_t value = *reg_low;
+        value |= (uint16_t)(*reg_high) << 8;
+
+        --value;
+
+        *reg_low = value & 0x00FF;
+        *reg_high = (value & 0xFF00) >> 8;
+    }
+
+    _pc += opcode_handler->length;
+}
+
 void CPU8080::MVI(OpcodeHandler* opcode_handler)
 {
     switch (opcode_handler->opcode)
@@ -200,6 +288,44 @@ void CPU8080::MVI(OpcodeHandler* opcode_handler)
         case Opcode::MVI_M: *_reg_M = _ram->Read(_pc + 1); break;
         case Opcode::MVI_A: _reg_A = _ram->Read(_pc + 1); break;
     }
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::DAD(OpcodeHandler* opcode_handler)
+{
+    uint16_t value_reg = 0;
+    uint16_t value_HL = _reg_L;
+    value_HL |= (uint16_t)(_reg_H) << 8;
+
+    switch (opcode_handler->opcode)
+    {
+        case Opcode::DAD_B:
+            value_reg = _reg_C;
+            value_reg |= (uint16_t)(_reg_B) << 8;
+            break;
+        case Opcode::DAD_D:
+            value_reg = _reg_E;
+            value_reg |= (uint16_t)(_reg_D) << 8;
+            break;
+        case Opcode::DAD_H:
+            value_reg = _reg_L;
+            value_reg |= (uint16_t)(_reg_H) << 8;
+            break;
+        case Opcode::DAD_SP:
+            value_reg = _stack_pointer;
+            break;
+    }
+
+    if (value_reg + value_HL > 0xFFFF)
+        _carry_flag = 1;
+    else
+        _carry_flag = 0;
+
+    uint16_t total = value_reg + value_HL;
+
+    _reg_L = total & 0x00FF;
+    _reg_H = (total & 0xFF00) >> 8;
 
     _pc += opcode_handler->length;
 }

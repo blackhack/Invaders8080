@@ -23,17 +23,20 @@ public:
     void STAX(OpcodeHandler* opcode_handler);
     void SHLD(OpcodeHandler* opcode_handler);
     void STA(OpcodeHandler* opcode_handler);
+    void INX(OpcodeHandler* opcode_handler);
     void LDAX(OpcodeHandler* opcode_handler);
     void LHLD(OpcodeHandler* opcode_handler);
     void LDA(OpcodeHandler* opcode_handler);
+    void DCX(OpcodeHandler* opcode_handler);
     void MVI(OpcodeHandler* opcode_handler);
+    void DAD(OpcodeHandler* opcode_handler);
     void MOV(OpcodeHandler* opcode_handler);
 private:
     Ram* _ram;
     uint16_t _pc;
     uint16_t _stack_pointer;
 
-    //Register
+    //Registers
     uint8_t _reg_B;
     uint8_t _reg_C;
     uint8_t _reg_D;
@@ -43,5 +46,11 @@ private:
     uint8_t* _reg_M = &_reg_H;
     uint8_t _reg_A;
 
+    // Conditional bits (flags)
+    uint8_t _carry_flag;
+    uint8_t _aux_carry_flag;
+    uint8_t _sign_flag;
+    uint8_t _zero_flag;
+    uint8_t _parity_flag;
 };
 
