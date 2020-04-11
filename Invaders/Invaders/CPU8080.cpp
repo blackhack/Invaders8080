@@ -13,6 +13,7 @@ CPU8080::CPU8080(Ram* ram) : _ram(ram)
     _reg_E = 0;
     _reg_H = 0;
     _reg_L = 0;
+    _reg_M = _ram->GetPointerToByte(0);
     _reg_A = 0;
 
     _carry_flag = 0;
@@ -40,6 +41,57 @@ void CPU8080::Execute()
     }
     else
         assert(false);
+
+    ReLinkMemoryReference(); // Relink reg_m to the memory address specified by H(LSB) and L(MSB)
+}
+
+void CPU8080::CalculateFlags(uint16_t value1, uint16_t value2, bool add, FlagsMask flags)
+{
+    uint32_t result = value1;
+    if (add)
+        result += value2;
+    else
+        result -= value2;
+
+    if (flags & FLAG_CARRY)
+    {
+        if (add)
+            _carry_flag = result > 0xFFFF ? 1 : 0;
+        else
+            _carry_flag = (value1 <= value2) ? 1 : 0;
+    }
+    if (flags & FLAG_AUX_CARRY)
+    {
+        if (add)
+            _aux_carry_flag = result > 0xFF ? 1 : 0;
+        else
+            _aux_carry_flag = (value1 <= value2) ? 1 : 0;
+    }
+    if (flags & FLAG_SIGN)
+        _sign_flag = ((result & 0b10000000) >> 7) == 1 ? 1 : 0;
+    if (flags & FLAG_ZERO)
+        _zero_flag = (result & 0xFF) == 0 ? 1 : 0;
+
+    auto CheckParity = [](uint8_t value)
+    { 
+        uint8_t count = 0;
+        for (int i = 0; i < 8; ++i)
+            if ((value & 0x1 << i) != 0)
+                ++count;
+
+        return (count % 2) == 0 ? 1 : 0;
+    };
+
+    if (flags & FLAG_PARITY)
+        _parity_flag = CheckParity((uint8_t)result);
+}
+
+void CPU8080::ReLinkMemoryReference()
+{
+    uint16_t address = (uint16_t)_reg_L << 8;
+    address |= _reg_H;
+
+    _reg_M = _ram->GetPointerToByte(address);
 }
 
 void CPU8080::PrintDebug()
@@ -85,7 +137,7 @@ uint16_t CPU8080::StackPop()
 
 void CPU8080::NotImplementedHandler(OpcodeHandler* opcode_handler)
 {
-
+    std::cerr << "Executing not implemented opcode: " << opcode_handler->name << std::endl;
 }
 
 void CPU8080::NOP(OpcodeHandler* opcode_handler)
@@ -192,6 +244,40 @@ void CPU8080::INX(OpcodeHandler* opcode_handler)
 
         *reg_low = value & 0x00FF;
         *reg_high = (value & 0xFF00) >> 8;
+    }
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::INR(OpcodeHandler* opcode_handler)
+{
+    switch (opcode_handler->opcode)
+    {
+        case Opcode::INR_B: CalculateFlags(_reg_B, 1, true, FLAG_ALL_BUT_CARRY); ++_reg_B; break;
+        case Opcode::INR_C: CalculateFlags(_reg_C, 1, true, FLAG_ALL_BUT_CARRY); ++_reg_C; break;
+        case Opcode::INR_D: CalculateFlags(_reg_D, 1, true, FLAG_ALL_BUT_CARRY); ++_reg_D; break;
+        case Opcode::INR_E: CalculateFlags(_reg_E, 1, true, FLAG_ALL_BUT_CARRY); ++_reg_E; break;
+        case Opcode::INR_H: CalculateFlags(_reg_H, 1, true, FLAG_ALL_BUT_CARRY); ++_reg_H; break;
+        case Opcode::INR_L: CalculateFlags(_reg_L, 1, true, FLAG_ALL_BUT_CARRY); ++_reg_L; break;
+        case Opcode::INR_M: CalculateFlags(*_reg_M, 1, true, FLAG_ALL_BUT_CARRY); ++(*_reg_M); break;
+        case Opcode::INR_A: CalculateFlags(_reg_A, 1, true, FLAG_ALL_BUT_CARRY); ++_reg_A; break;
+    }
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::DCR(OpcodeHandler* opcode_handler)
+{
+    switch (opcode_handler->opcode)
+    {
+        case Opcode::DCR_B: CalculateFlags(_reg_B, 1, false, FLAG_ALL_BUT_CARRY); --_reg_B; break;
+        case Opcode::DCR_C: CalculateFlags(_reg_C, 1, false, FLAG_ALL_BUT_CARRY); --_reg_C; break;
+        case Opcode::DCR_D: CalculateFlags(_reg_D, 1, false, FLAG_ALL_BUT_CARRY); --_reg_D; break;
+        case Opcode::DCR_E: CalculateFlags(_reg_E, 1, false, FLAG_ALL_BUT_CARRY); --_reg_E; break;
+        case Opcode::DCR_H: CalculateFlags(_reg_H, 1, false, FLAG_ALL_BUT_CARRY); --_reg_H; break;
+        case Opcode::DCR_L: CalculateFlags(_reg_L, 1, false, FLAG_ALL_BUT_CARRY); --_reg_L; break;
+        case Opcode::DCR_M: CalculateFlags(*_reg_M, 1, false, FLAG_ALL_BUT_CARRY); --(*_reg_M); break;
+        case Opcode::DCR_A: CalculateFlags(_reg_A, 1, false, FLAG_ALL_BUT_CARRY); --_reg_A; break;
     }
 
     _pc += opcode_handler->length;
@@ -317,10 +403,7 @@ void CPU8080::DAD(OpcodeHandler* opcode_handler)
             break;
     }
 
-    if (value_reg + value_HL > 0xFFFF)
-        _carry_flag = 1;
-    else
-        _carry_flag = 0;
+    CalculateFlags(value_reg, value_HL, true, FLAG_CARRY);
 
     uint16_t total = value_reg + value_HL;
 

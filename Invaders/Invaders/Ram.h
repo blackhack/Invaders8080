@@ -14,6 +14,7 @@ public:
     void ClearRam();
     void Write(uint16_t address, uint8_t data);
     uint8_t Read(uint16_t address);
+    uint8_t* GetPointerToByte(uint16_t address) { return &_memory[address]; }
 
     std::vector<uint8_t> GetRamCopy();
     std::size_t GetProgramSize() { return _programSize; }

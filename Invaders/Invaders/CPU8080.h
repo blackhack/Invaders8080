@@ -5,6 +5,18 @@
 
 class Ram;
 
+enum FlagsMask
+{
+    FLAG_CARRY = 1,
+    FLAG_AUX_CARRY = 2,
+    FLAG_SIGN = 4,
+    FLAG_ZERO = 8,
+    FLAG_PARITY = 16,
+    FLAG_ALL = FLAG_CARRY | FLAG_AUX_CARRY | FLAG_SIGN | FLAG_ZERO | FLAG_PARITY,
+    FLAG_ALL_BUT_CARRY = FLAG_ALL & ~FLAG_CARRY,
+    FLAG_ALL_BUT_AUX_CARRY = FLAG_ALL & ~FLAG_AUX_CARRY
+};
+
 class CPU8080
 {
 public:
@@ -12,6 +24,8 @@ public:
     ~CPU8080();
 
     void Execute();
+    void CalculateFlags(uint16_t value1, uint16_t value2, bool add, FlagsMask flags);
+    void ReLinkMemoryReference();
     void PrintDebug();
     void StackPush(uint16_t value);
     uint16_t StackPop();
@@ -24,6 +38,8 @@ public:
     void SHLD(OpcodeHandler* opcode_handler);
     void STA(OpcodeHandler* opcode_handler);
     void INX(OpcodeHandler* opcode_handler);
+    void INR(OpcodeHandler* opcode_handler);
+    void DCR(OpcodeHandler* opcode_handler);
     void LDAX(OpcodeHandler* opcode_handler);
     void LHLD(OpcodeHandler* opcode_handler);
     void LDA(OpcodeHandler* opcode_handler);
@@ -43,7 +59,7 @@ private:
     uint8_t _reg_E;
     uint8_t _reg_H;
     uint8_t _reg_L;
-    uint8_t* _reg_M = &_reg_H;
+    uint8_t* _reg_M;
     uint8_t _reg_A;
 
     // Conditional bits (flags)
