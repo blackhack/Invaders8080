@@ -378,6 +378,44 @@ void CPU8080::MVI(OpcodeHandler* opcode_handler)
     _pc += opcode_handler->length;
 }
 
+void CPU8080::RLC(OpcodeHandler* opcode_handler)
+{
+    _carry_flag = (_reg_A & 0b10000000) >> 7;
+    _reg_A <<= 1;
+    _reg_A |= _carry_flag;
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::RRC(OpcodeHandler* opcode_handler)
+{
+    _carry_flag = _reg_A & 0b00000001;
+    _reg_A >>= 1;
+    _reg_A |= _carry_flag << 7;
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::RAL(OpcodeHandler* opcode_handler)
+{
+    uint8_t old_carry = _carry_flag;
+    _carry_flag = (_reg_A & 0b10000000) >> 7;
+    _reg_A <<= 1;
+    _reg_A |= old_carry;
+
+    _pc += opcode_handler->length;
+}
+
+void CPU8080::RAR(OpcodeHandler* opcode_handler)
+{
+    uint8_t old_carry = _carry_flag;
+    _carry_flag = _reg_A & 0b00000001;
+    _reg_A >>= 1;
+    _reg_A |= old_carry << 7;
+
+    _pc += opcode_handler->length;
+}
+
 void CPU8080::DAD(OpcodeHandler* opcode_handler)
 {
     uint16_t value_reg = 0;

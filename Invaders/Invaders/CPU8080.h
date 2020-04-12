@@ -45,6 +45,10 @@ public:
     void LDA(OpcodeHandler* opcode_handler);
     void DCX(OpcodeHandler* opcode_handler);
     void MVI(OpcodeHandler* opcode_handler);
+    void RLC(OpcodeHandler* opcode_handler);
+    void RRC(OpcodeHandler* opcode_handler);
+    void RAL(OpcodeHandler* opcode_handler);
+    void RAR(OpcodeHandler* opcode_handler);
     void DAD(OpcodeHandler* opcode_handler);
     void MOV(OpcodeHandler* opcode_handler);
 private:
